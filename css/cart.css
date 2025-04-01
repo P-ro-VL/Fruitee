@@ -1,0 +1,80 @@
+.cart-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+.quantity {
+  display: flex;
+  align-items: center;
+}
+.quantity button {
+  padding: 5px 10px;
+  border: none;
+  background: #80b600;
+  color: #fff;
+  cursor: pointer;
+  margin: 0 20px;
+}
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: red;
+  font-size: 18px;
+}
+
+.order-summary input {
+  width: 70%;
+  padding: 5px;
+  margin-right: 5px;
+}
+.checkout-btn {
+  background: #80b600;
+  color: white;
+  padding: 20px 10px;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+.apply-button {
+  background: #80b600;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+input {
+  width: 100%;
+  padding: 12px 15px 12px 40px;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  outline: none;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+input:focus {
+  border-color: #80b600;
+}
+
+input[type="text"] {
+  padding: 8px 12px;
+}

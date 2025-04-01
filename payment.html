@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Fruitee</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <link href="./css/styles.css" rel="stylesheet" />
+    <link href="./css/payment.css" rel="stylesheet" />
+  </head>
+  <body style="background-color: #f7f4eb">
+    <div class="flex space-between items-center px-10 py-1">
+      <a style="color: #80b600; font-size: 1.25rem" class="bold">Fruitee</a>
+      <div class="w-1_4 flex space-evenly">
+        <a class="pointer">Trang chủ</a>
+        <a class="bold pointer">Cửa hàng</a>
+        <a class="pointer">Về chúng tôi</a>
+      </div>
+      <div class="flex items-center">
+        <img
+          src="./assets/svg/cart.svg"
+          class="w_2 h_2"
+          style="margin-right: 1.5rem; visibility: hidden"
+        />
+        <a class="pointer">Đăng nhập</a>
+      </div>
+    </div>
+  </body>
+
+  <div class="flex-col items-center">
+    <p
+      style="
+        font-size: 2.5rem;
+        color: #80b600;
+        width: fit-content;
+        margin-top: 5rem;
+      "
+      class="bold"
+    >
+      Thanh toán giỏ hàng
+    </p>
+  </div>
+
+  <div class="w-full center flex-col items-center" style="margin-top: 2rem">
+    <div class="payment-form-container">
+      <form class="payment-form">
+        <div class="form-section">
+          <div class="section-header">
+            <label class="main-label">Số thẻ</label>
+          </div>
+          <p class="subtitle">Nhập một mã số thẻ hợp lệ gồm 16 ký tự</p>
+          <div class="input-group card-display">
+            <i class="fa-brands fa-cc-mastercard card-icon"></i>
+            <input id="card-number" />
+          </div>
+        </div>
+
+        <div class="form-section">
+          <label for="cvv" class="main-label">Họ và tên</label>
+          <p class="subtitle">Họ và tên đầy đủ của chủ thẻ</p>
+          <div class="input-group">
+            <input type="text" id="cardOwnerName" placeholder="Nguyễn Văn A" />
+          </div>
+        </div>
+
+        <div class="form-section">
+          <label for="cvv" class="main-label">Mã CVV</label>
+          <p class="subtitle">Gồm 3 hoặc 4 ký tự, được in trên thẻ</p>
+          <div class="input-group">
+            <input
+              type="text"
+              id="cvv"
+              inputmode="numeric"
+              maxlength="4"
+              placeholder="327"
+            />
+            <i class="fa-solid fa-grip icon-right"></i>
+          </div>
+        </div>
+
+        <div class="form-section expiry-section">
+          <div>
+            <label for="expiryMonth" class="main-label">Ngày hết hạn</label>
+            <p class="subtitle">Ngày hết hạn của thẻ</p>
+            <div class="input-group expiry-inputs">
+              <input
+                type="text"
+                id="expiryMonth"
+                inputmode="numeric"
+                maxlength="2"
+                placeholder="09"
+              />
+              <span class="separator">/</span>
+              <input
+                type="text"
+                id="expiryYear"
+                inputmode="numeric"
+                maxlength="2"
+                placeholder="22"
+              />
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="submit-button">Thanh toán 360.000đ</button>
+      </form>
+    </div>
+  </div>
+</html>
