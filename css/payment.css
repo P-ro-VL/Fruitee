@@ -1,0 +1,121 @@
+.payment-form-container {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  max-width: 450px; /* Adjust as needed */
+  width: 100%;
+}
+
+.form-section {
+  margin-bottom: 25px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.main-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa; /* Slightly different background for inputs */
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px 15px;
+  position: relative; /* Needed for absolute positioned icons if used */
+}
+
+.input-group input {
+  flex-grow: 1; /* Input takes remaining space */
+  border: none;
+  outline: none;
+  background-color: transparent; /* Inherit from parent */
+  font-size: 1rem;
+  color: #333;
+}
+
+.input-group input::placeholder {
+  color: #aaa;
+}
+
+/* Specific Input Field Styling */
+.expiry-section .input-group {
+  padding: 0; /* Remove padding to place inputs side-by-side */
+  background-color: transparent;
+  border: none;
+}
+.expiry-inputs input {
+  width: 60px; /* Fixed width for MM/YY */
+  text-align: center;
+  background-color: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px 5px; /* Adjust padding */
+  font-size: 1rem;
+}
+
+.expiry-inputs .separator {
+  margin: 0 10px;
+  font-size: 1.2rem;
+  color: #888;
+  line-height: 40px; /* Align with inputs */
+}
+
+/* Card Number Display Specific Styles */
+.card-display {
+  background-color: #f8f9fa;
+  font-size: 1rem;
+  color: #333;
+  justify-content: space-between; /* Distribute items */
+}
+.card-icon {
+  color: #ff5f00; /* Mastercard orange/red */
+  font-size: 1.8rem; /* Larger icon */
+  margin-right: 10px;
+}
+.card-number-part {
+  font-family: "Courier New", Courier, monospace; /* Monospace font for numbers */
+  letter-spacing: 1px;
+  margin: 0 2px; /* Small gap */
+}
+
+/* Icons inside input groups */
+.icon-right {
+  color: #aaa;
+  margin-left: 10px;
+  font-size: 1.2rem;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #80b600;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 15px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.submit-button:hover {
+  background-color: #5b7817;
+}

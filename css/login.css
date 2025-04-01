@@ -1,0 +1,276 @@
+/* --- Variable Definitions --- */
+:root {
+  --primary-color: #80b600; /* A nice blue */
+  --secondary-color: #80b600; /* A teal accent */
+  --background-gradient-start: #f7f8fc;
+  --background-gradient-end: #eef1f5;
+  --text-color: #333;
+  --input-border-color: #dfe3e8;
+  --input-focus-color: var(--primary-color);
+  --button-text-color: #fff;
+  --light-gray: #a0aec0; /* For subtitles and links */
+  --white: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --separator-color: #e2e8f0;
+  --google-color: #db4437;
+  --facebook-color: #3b5998;
+}
+
+/* --- General Styles --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* --- Login Container --- */
+.login-container {
+  padding: 40px 50px; /* More padding */
+  border-radius: 12px; /* Softer edges */
+  width: 100%;
+  max-width: 450px; /* Slightly wider */
+  text-align: center;
+  overflow: hidden; /* Ensure contents respect border radius */
+}
+
+/* --- Form Elements --- */
+.login-form h1 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 2em; /* Larger title */
+}
+
+.login-form .subtitle {
+  color: var(--light-gray);
+  margin-bottom: 30px;
+  font-size: 0.95em;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+  position: relative; /* Needed for icon positioning */
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 400;
+  font-size: 0.9em;
+  color: var(--text-color);
+}
+
+.input-group .icon {
+  margin-right: 8px;
+  color: var(--light-gray);
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"] {
+  width: 100%;
+  padding: 12px 15px 12px 40px; /* Add padding for icon */
+  border: 1px solid var(--input-border-color);
+  border-radius: 8px;
+  font-size: 1em;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #f8f9fa; /* Light background for input */
+}
+
+/* Position icons inside the input field */
+.input-group .icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%); /* Center vertically */
+  color: var(--light-gray);
+  pointer-events: none; /* Make icon non-interactive */
+  font-size: 0.9em; /* Adjust icon size */
+  /* Adjust top position slightly if label is present */
+  top: calc(50% + 13px); /* Adjust this value as needed */
+}
+
+/* Adjust input padding when there's no label (just placeholder) */
+.input-group input::placeholder {
+  color: var(--light-gray);
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--input-focus-color);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); /* Focus ring */
+}
+
+/* --- Options (Remember Me / Forgot Password) --- */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 0.85em;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  color: var(--light-gray);
+  cursor: pointer;
+}
+
+.remember-me input[type="checkbox"] {
+  margin-right: 8px;
+  accent-color: var(--primary-color); /* Style checkbox */
+}
+
+.forgot-password {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+  color: #3a7bc8; /* Darker blue on hover */
+  text-decoration: underline;
+}
+
+.login-button {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  border: none;
+  border-radius: 8px;
+  color: var(--button-text-color);
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+  margin-bottom: 25px; /* Space before separator */
+}
+
+.login-button:hover {
+  background-color: #5b7817;
+}
+
+.login-button:active {
+  transform: scale(0.98); /* Press down effect */
+}
+
+/* --- Separator --- */
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--light-gray);
+  margin-bottom: 25px;
+  font-size: 0.8em;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--separator-color);
+}
+
+.separator span {
+  padding: 0 15px; /* Space around OR */
+}
+
+/* --- Social Login Buttons --- */
+.social-login {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.95em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--input-border-color);
+  background-color: var(--white);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.social-login i {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.social-login.google {
+  border-color: #e0e0e0; /* Google grey */
+}
+.social-login.google:hover {
+  background-color: #f7f7f7;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+.social-login.google i {
+  color: var(--google-color);
+}
+
+.social-login.facebook {
+  border-color: #d4d9e3; /* Facebook subtle */
+}
+.social-login.facebook:hover {
+  background-color: #f7f7f7;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+.social-login.facebook i {
+  color: var(--facebook-color);
+}
+
+/* --- Sign Up Link --- */
+.signup-link {
+  margin-top: 20px; /* Adjusted margin */
+  font-size: 0.9em;
+  color: var(--light-gray);
+}
+
+.signup-link a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.signup-link a:hover {
+  color: #3a7bc8; /* Darker blue */
+  text-decoration: underline;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 500px) {
+  .login-container {
+    padding: 30px 25px; /* Less padding on small screens */
+    max-width: 90%;
+  }
+
+  .login-form h1 {
+    font-size: 1.8em;
+  }
+
+  .options {
+    flex-direction: column; /* Stack options */
+    align-items: flex-start;
+    gap: 10px; /* Add space between stacked items */
+  }
+
+  .forgot-password {
+    align-self: flex-start; /* Align forgot password left */
+  }
+}
