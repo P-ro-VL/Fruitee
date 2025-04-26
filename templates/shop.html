@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Fruitee</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='index.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const searchBox = document.querySelector('.search-box');
+        const inputField = searchBox.querySelector('input[type="text"]');
+
+        inputField.addEventListener('keypress', function (event) {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            const searchText = inputField.value;
+            if (searchText) {
+              window.location.href = `/shop?query=${encodeURIComponent(
+                searchText
+              )}`;
+            } else {
+              window.location.href = `/shop`;
+            }
+          }
+        });
+
+        const user = document.getElementById('username');
+        user.addEventListener('click', function () {
+          const result = confirm(
+            'Bạn có chắc chắn muốn đăng xuất không?'
+          );
+          if (result) {
+            fetch('/logout').then((response) => {
+              if (response.ok) {
+                window.location.href = '/';
+              } else {
+                alert('Đăng xuất không thành công');
+              }
+            });
+          }
+        });
+
+        const buyButtons = document.querySelectorAll('.add-to-cart');
+        console.log(buyButtons)
+        buyButtons.forEach((button) => {
+          console.log(button);
+          button.addEventListener('click', function () {
+            const productId = this.id;
+            fetch(`/add/${productId}`, {
+              method: 'POST',
+            })
+              .then((response) => {
+                if (response.status == 200) {
+                  alert('Thêm vào giỏ hàng thành công!');
+                } else {
+                  alert('Thêm vào giỏ hàng thất bại!');
+                }
+              });
+          });
+        });
+      });
+    </script>
+
+  </head>
+  <body style="background-color: #f7f4eb">
+    <div class="flex space-between items-center px-10 py-1">
+      <a style="color: #80b600; font-size: 1.25rem" class="bold">Fruitee</a>
+      <div class="w-1_4 flex space-evenly">
+        <a class="pointer" href="/">Trang chủ</a>
+        <a class="bold pointer" href="/shop">Cửa hàng</a>
+        <a class="pointer" href="/about">Về chúng tôi</a>
+      </div>
+      <div class="flex items-center">
+        {% if user %}
+        <a id="username" class="pointer">{{ user }}</a>
+        <a href="/cart"><img
+          src="{{ url_for('static', filename='svg/cart.svg') }}"
+          class="w_2 h_2"
+          style="margin-right: 1.5rem; margin-left: 1rem;"
+        /></a>
+        {% else %}
+        <a class="pointer" href="/login">Đăng nhập</a>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+
+  <div class="w-full center flex-col items-center" style="margin-top: 5rem">
+    <div class="flex-col items-center">
+      <p
+        style="font-size: 2.5rem; color: #80b600; width: fit-content"
+        class="bold"
+      >
+        Cửa hàng
+      </p>
+      <p style="margin-top: 0.8rem; font-size: 1.25rem; width: fit-content">
+        Lựa chọn giỏ hoa quả tươi 100% của bạn
+      </p>
+    </div>
+
+    <div class="search-box" style="margin-top: 2rem">
+      <input type="text" placeholder="Tìm kiếm loại hoa quả bạn muốn mua" />
+      <i class="fa fa-search"></i>
+    </div>
+
+    <div
+      style="
+        margin-top: 4rem;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        gap: 16px;
+        flex-wrap: wrap;
+      "
+      class="flex center"
+    >
+      {% for product in products %}
+        <div
+          class="p-2 shadow flex-col items-center space-between pointer"
+          style="
+            background-color: white;
+            width: 180px;
+            height: 280px;
+            border-radius: 12px;
+          "
+        >
+          <img
+          src="{{ url_for('static', filename='images/' + product[0] + '.png') }}"
+          style="width: 150px; height: 150px; object-fit: contain"
+          />
+          <div class="flex-col items-center">
+            <p style="font-size: 1.25rem; color: #272727; margin-top: 12px;">{{ product[1] }}</p>
+            <p
+              style="font-size: 1.25rem; color: #80b600; margin-top: 8px"
+              class="semibold"
+            >
+              {{ product[2] }}đ
+            </p>
+            <div
+              id="{{ product[0] }}"
+              style="background-color: #80b600; color: white; margin-top: 18px; padding-left: 12px; padding-right: 12px;"
+              class="add-to-cart flex center py-1 w-fit pointer"
+            >
+              Thêm vào giỏ hàng
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div style="height: 80px" class="flex items-center center">
+      Copyright by Fruitee @ 2025. All right reserved.
+    </div>
+  </div>
+</html>

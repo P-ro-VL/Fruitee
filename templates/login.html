@@ -9,8 +9,14 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <link href="./css/styles.css" rel="stylesheet" />
-    <link href="./css/login.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='login.css') }}"
+    />
   </head>
   <body style="background-color: #f7f4eb">
     <div class="flex space-between items-center px-10 py-1">
@@ -21,23 +27,17 @@
         >Fruitee</a
       >
       <div class="w-1_4 flex space-evenly">
-        <a class="bold pointer">Trang chủ</a>
-        <a class="pointer">Cửa hàng</a>
-        <a class="pointer">Về chúng tôi</a>
+        <a class="bold pointer" href="/">Trang chủ</a>
+        <a class="pointer" href="/shop">Cửa hàng</a>
+        <a class="pointer" href="/about">Về chúng tôi</a>
       </div>
       <div class="flex items-center">
-        <img
-          src="./assets/svg/cart.svg"
-          class="w_2 h_2"
-          style="margin-right: 1.5rem; visibility: hidden"
-        />
-        <a class="pointer">Đăng nhập</a>
       </div>
     </div>
 
     <div class="flex center" style="margin-top: 2.5rem">
       <div class="login-container">
-        <form class="login-form" action="#" method="post">
+        <form class="login-form" method="post">
           <h1 style="font-size: 2.5rem">Đăng nhập</h1>
           <p class="subtitle" style="font-size: 1rem">
             Vui lòng đăng nhập để tiếp tục

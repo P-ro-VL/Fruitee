@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Fruitee</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='cart.css') }}"
+    />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const user = document.getElementById('username');
+        user.addEventListener('click', function () {
+          const result = confirm(
+            'Bạn có chắc chắn muốn đăng xuất không?'
+          );
+          if (result) {
+            fetch('/logout').then((response) => {
+              if (response.ok) {
+                window.location.href = '/';
+              } else {
+                alert('Đăng xuất không thành công');
+              }
+            });
+          }
+        });
+
+        const minusButtons = document.querySelectorAll('.minus');
+        const plusButtons = document.querySelectorAll('.plus');
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        minusButtons.forEach((button) => {
+          button.addEventListener('click', function () {
+            const productId = this.id;
+
+            fetch('/cart?action=remove&product_id=' + productId, {
+              method: 'POST',
+            })
+              .then((response) => {
+                if (response.status == 200) {
+                  window.location.href = '/cart';
+                } else {
+                  alert('Xóa sản phẩm không thành công');
+                }
+              });
+          });
+        });
+
+        plusButtons.forEach((button) => {
+          button.addEventListener('click', function () {
+            const productId = this.id;
+
+            fetch('/cart?action=add&product_id=' + productId, {
+              method: 'POST',
+            })
+              .then((response) => {
+                if (response.status == 200) {
+                  window.location.href = '/cart';
+                } else {
+                  alert('Thêm sản phẩm không thành công');
+                }
+              });
+          });
+        });
+
+        deleteButtons.forEach((button) => {
+          button.addEventListener('click', function () {
+          });
+        });
+
+        const applyCoupon = document.getElementById('apply-coupon');
+        applyCoupon.addEventListener('click', function () {
+          const couponCode = document.getElementById('coupon-code').value;
+          if (!couponCode) {
+            alert('Vui lòng nhập mã giảm giá');
+            return;
+          }
+
+          window.location.href = '/cart?coupon_code=' + couponCode;
+        });
+
+        const makePayment = document.getElementById('make-payment');
+        makePayment.addEventListener('click', function () {
+          const totalPrice = document.getElementById('total_price').innerText;
+          fetch('/payment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 'total_price': totalPrice }),
+          })
+            .then((response) => {
+              window.location.href = '/payment';
+            });
+        });
+      });
+    </script>
+  </head>
+  <body style="background-color: #f7f4eb">
+    <div class="flex space-between items-center px-10 py-1">
+      <a style="color: #80b600; font-size: 1.25rem" class="bold">Fruitee</a>
+      <div class="w-1_4 flex space-evenly">
+        <a class="pointer" href="/">Trang chủ</a>
+        <a class="bold pointer" href="/shop">Cửa hàng</a>
+        <a class="pointer" href="/about">Về chúng tôi</a>
+      </div>
+      <div class="flex items-center">
+        {% if user %}
+        <a id="username" class="pointer">{{ user }}</a>
+        <img
+          src="{{ url_for('static', filename='svg/cart.svg') }}"
+          class="w_2 h_2"
+          style="margin-right: 1.5rem; margin-left: 1rem;"
+        />
+        {% else %}
+        <a class="pointer" href="/login">Đăng nhập</a>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+
+  <div class="w-full center flex-col items-center" style="margin-top: 5rem">
+    <div class="flex-col items-center">
+      <p
+        style="font-size: 2.5rem; color: #80b600; width: fit-content"
+        class="bold"
+      >
+        Giỏ hàng của bạn
+      </p>
+    </div>
+
+    <div
+      class="w-full flex center"
+      style="height: fit-content; margin-top: 2rem"
+    >
+      <div
+        style="
+          width: 70%;
+          height: auto;
+          border-radius: 12px;
+          border: 3px solid rgba(39, 39, 39, 0.2);
+          padding: 10px 30px;
+        "
+      >
+        <div class="cart-table">
+          <table>
+            <tr>
+              <th>Sản phẩm</th>
+              <th>Đơn giá</th>
+              <th>Số lượng</th>
+              <th>Thành tiền</th>
+              <th>Hành động</th>
+            </tr>
+
+            {% for product in cart %}
+            <tr>
+              <td>{{ product.name }}</td>
+              <td>{{ product.price }}đ</td>
+              <td class="quantity flex center">
+                <button id="{{ product.id }}" class="minus">-</button> {{ product.quantity }} <button id="{{ product.id }}" class="plus">+</button>
+              </td>
+              <td>{{ product.total_price }}đ</td>
+              <td><button class="delete-btn">🗑</button></td>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+      <div style="width: 10px"></div>
+      <div
+        style="
+          height: 25rem;
+          width: 30%;
+          border-radius: 12px;
+          border: 3px solid rgba(39, 39, 39, 0.2);
+        "
+      >
+        <div class="order-summary" style="padding: 10px 30px">
+          <h3>Tổng giỏ hàng</h3>
+          <div class="flex center items-center">
+            <input id="coupon-code" type="text" placeholder="Mã giảm giá" />
+            <button id="apply-coupon" style="margin-left: 8px" class="apply-button">
+              Áp dụng
+            </button>
+          </div>
+          <div style="margin-top: 20px">
+            <div class="row flex space-between">
+              <p>Tạm tính:</p>
+              <strong>{{ total_cart }} USD</strong>
+            </div>
+            <div class="row flex space-between">
+              <p>Giảm giá:</p>
+              <strong>- {{ discount }} USD ({{ coupon_name }})</strong>
+            </div>
+            <div class="row flex space-between">
+              <p>Phí vận chuyển:</p>
+              <strong>{{ shipping_fee }} USD</strong>
+            </div>
+            <hr />
+            <div class="row flex space-between">
+              <p>Tổng cộng:</p>
+              <strong style="font-size: 1.25rem">{{ total_price }} USD</strong>
+            </div>
+            <hidden id="total_price">{{ total_price }}</hidden>
+          </div>
+          <button id="make-payment" class="checkout-btn" style="margin-top: 20px">
+            <b>Thanh toán ngay</b>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</html>
