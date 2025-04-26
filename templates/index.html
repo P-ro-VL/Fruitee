@@ -5,24 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fruitee</title>
 
-    <link href="./css/styles.css" rel="stylesheet" />
-    <link href="./css/index.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='index.css') }}"
+    />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const user = document.getElementById('username');
+        user.addEventListener('click', function () {
+          const result = confirm(
+            'Bạn có chắc chắn muốn đăng xuất không?'
+          );
+          if (result) {
+            fetch('/logout').then((response) => {
+              if (response.ok) {
+                window.location.href = '/';
+              } else {
+                alert('Đăng xuất không thành công');
+              }
+            });
+          }
+        });
+      });
+    </script>
   </head>
   <body style="background-color: #f7f4eb">
     <div class="flex space-between items-center px-10 py-1">
       <a style="color: #80b600; font-size: 1.25rem" class="bold">Fruitee</a>
       <div class="w-1_4 flex space-evenly">
-        <a class="bold pointer">Trang chủ</a>
-        <a class="pointer">Cửa hàng</a>
-        <a class="pointer">Về chúng tôi</a>
+        <a class="bold pointer" href="/">Trang chủ</a>
+        <a class="pointer" href="/shop">Cửa hàng</a>
+        <a class="pointer" href="/about">Về chúng tôi</a>
       </div>
       <div class="flex items-center">
-        <img
-          src="./assets/svg/cart.svg"
+        
+        {% if user %}
+        <a id="username" class="pointer">{{ user }}</a>
+        <a href="/cart"><img
+          src="{{ url_for('static', filename='svg/cart.svg') }}"
           class="w_2 h_2"
-          style="margin-right: 1.5rem; visibility: hidden"
-        />
-        <a class="pointer">Đăng nhập</a>
+          style="margin-right: 1.5rem; margin-left: 1rem;"
+        /></a>
+        {% else %}
+        <a class="pointer" href="/login">Đăng nhập</a>
+        {% endif %}
+
       </div>
     </div>
 
@@ -34,14 +66,19 @@
         <p class="bold" style="font-size: 32pt; margin: 10px 0 20px 0">
           Sàn thương mại dành riêng cho hoa quả
         </p>
-        <div
+        <a href="/shop">
+          <div
           style="background-color: #80b600; color: white"
           class="flex center px_2 py-1 w-fit pointer"
         >
           Mua ngay
         </div>
+        </a>
       </div>
-      <img src="./assets/images/imgFruits.png" class="w_30 contain" />
+      <img
+        src="{{ url_for('static', filename='images/imgFruits.png') }}"
+        class="w_30 contain"
+      />
     </div>
 
     <div
@@ -50,7 +87,10 @@
     >
       <div class="grid w-1_2">
         <div class="first p-2 serif" style="margin-right: 1rem">
-          <img src="./assets/images/imgApple.png" style="width: 70%" />
+          <img
+            src="{{ url_for('static', filename='images/imgApple.png') }}"
+            style="width: 70%"
+          />
           <div class="inline-block">
             <p style="font-size: 1.5rem; color: #272727">
               Từ tâm huyết của những
@@ -64,7 +104,10 @@
           class="second flex p-2 items-center serif"
           style="margin-bottom: 1rem"
         >
-          <img src="./assets/images/imgOrange.webp" style="width: 60%" />
+          <img
+            src="{{ url_for('static', filename='images/imgOrange.webp') }}"
+            style="width: 60%"
+          />
           <a style="text-wrap: wrap; font-size: 1.5rem"
             >Đảm bảo <b>100% tự nhiên</b>, không chất bảo quản</a
           >
@@ -73,7 +116,10 @@
           class="third flex p-2 items-center serif"
           style="margin-bottom: 1rem"
         >
-          <img src="./assets/images/imgBanana.webp" style="width: 50%" />
+          <img
+            src="{{ url_for('static', filename='images/imgBanana.webp') }}"
+            style="width: 50%"
+          />
           <a style="text-wrap: wrap; font-size: 1.5rem; margin-left: 1.5rem"
             >Yên tâm sử dụng cùng <b>gia đình</b></a
           >

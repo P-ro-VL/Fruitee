@@ -2,6 +2,11 @@ body {
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 p {
   margin: 0px;
 }

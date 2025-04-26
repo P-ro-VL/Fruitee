@@ -11,24 +11,76 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
 
-    <link href="./css/styles.css" rel="stylesheet" />
-    <link href="./css/payment.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='payment.css') }}"
+    />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const user = document.getElementById('username');
+        user.addEventListener('click', function () {
+          const result = confirm(
+            'Bạn có chắc chắn muốn đăng xuất không?'
+          );
+          if (result) {
+            fetch('/logout').then((response) => {
+              if (response.ok) {
+                window.location.href = '/';
+              } else {
+                alert('Đăng xuất không thành công');
+              }
+            });
+          }
+        });
+
+        const payButton = document.getElementById('pay');
+        payButton.addEventListener('click', function () {
+          const cardNumber = document.getElementById('card-number').value;
+          const cardOwnerName = document.getElementById('cardOwnerName').value;
+          const cvv = document.getElementById('cvv').value;
+          const expiryMonth = document.getElementById('expiryMonth').value;
+          const expiryYear = document.getElementById('expiryYear').value;
+
+          if (
+            cardNumber.length === 16 &&
+            cardOwnerName &&
+            cvv.length >= 3 &&
+            expiryMonth &&
+            expiryYear
+          ) {
+            window.location.href = '/';
+            alert('Thanh toán thành công!');
+          } else {
+            alert('Vui lòng nhập thông tin thanh toán hợp lệ.');
+          }
+        });
+      });
+    </script>
   </head>
   <body style="background-color: #f7f4eb">
     <div class="flex space-between items-center px-10 py-1">
       <a style="color: #80b600; font-size: 1.25rem" class="bold">Fruitee</a>
       <div class="w-1_4 flex space-evenly">
         <a class="pointer">Trang chủ</a>
-        <a class="bold pointer">Cửa hàng</a>
+        <a class="bold pointer" href="/shop">Cửa hàng</a>
         <a class="pointer">Về chúng tôi</a>
       </div>
       <div class="flex items-center">
-        <img
-          src="./assets/svg/cart.svg"
+        {% if user %}
+        <a id="username" class="pointer">{{ user }}</a>
+        <a href="/cart"><img
+          src="{{ url_for('static', filename='svg/cart.svg') }}"
           class="w_2 h_2"
-          style="margin-right: 1.5rem; visibility: hidden"
-        />
-        <a class="pointer">Đăng nhập</a>
+          style="margin-right: 1.5rem; margin-left: 1rem;"
+        /></a>
+        {% else %}
+        <a class="pointer" href="/login">Đăng nhập</a>
+        {% endif %}
       </div>
     </div>
   </body>
@@ -57,7 +109,7 @@
           <p class="subtitle">Nhập một mã số thẻ hợp lệ gồm 16 ký tự</p>
           <div class="input-group card-display">
             <i class="fa-brands fa-cc-mastercard card-icon"></i>
-            <input id="card-number" />
+            <input id="card-number" maxlength="16"/>
           </div>
         </div>
 
@@ -107,7 +159,7 @@
             </div>
           </div>
         </div>
-        <button type="submit" class="submit-button">Thanh toán 360.000đ</button>
+        <button id="pay" class="submit-button">Thanh toán ${{ total_price }}</button>
       </form>
     </div>
   </div>
